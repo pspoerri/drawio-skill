@@ -5,42 +5,35 @@ from Mermaid, with or without a `.drawio` template. The diagrams it produces hav
 layout, attached connectors, no overlapping shapes, and real library shapes (AWS, Azure,
 Kubernetes, Cisco, BPMN, ...). Every file is validated against the official draw.io schema.
 
-The skill is the folder [`drawio-skill/`](drawio-skill/). It follows the open
-[Agent Skills](https://agentskills.io) format (`SKILL.md` plus scripts and references), so
-any agent that supports skills can use it, not only Claude. Its only dependency is
+This repository *is* the skill: `SKILL.md` sits at the root together with its scripts and
+references. It follows the open [Agent Skills](https://agentskills.io) format, so any
+agent that supports skills can use it, not only Claude. Its only dependency is
 Python 3.9+, standard library only.
 
 ## Install
 
-Symlink the folder into the skills directory of your agent. Symlinking rather than
-copying means a `git pull` here updates every agent at once.
-
-**Name the link `drawio`.** The skill's `name` in `SKILL.md` is `drawio`, and several
-agents require the folder name to match it.
-
-Run these from the root of this repository:
-
-```bash
-SKILL="$PWD/drawio-skill"
-```
+Clone the repository into your agent's skills directory. **Name the folder `drawio`.**
+The skill's `name` in `SKILL.md` is `drawio`, and several agents require the folder name
+to match it.
 
 ### Claude Code
 
 ```bash
-mkdir -p ~/.claude/skills
-ln -s "$SKILL" ~/.claude/skills/drawio            # all projects
+git clone <repo-url> ~/.claude/skills/drawio                     # all projects
 # or, for one project only:
-ln -s "$SKILL" /path/to/project/.claude/skills/drawio
+git clone <repo-url> /path/to/project/.claude/skills/drawio
 ```
 
 Start a new session. `/drawio` should be listed, and Claude picks it up when you ask for
 a draw.io diagram. Custom subagents (`.claude/agents/*.md`) can preload it with
 `skills: [drawio]` in their frontmatter.
 
+Update with `git -C ~/.claude/skills/drawio pull`. Remove by deleting the folder.
+
 ### Other agents
 
-The locations below are where these agents looked for skills at the time of writing.
-Check your agent's documentation if a path does not work.
+Clone into the matching directory instead. These are the locations the agents looked in
+at the time of writing; check your agent's documentation if one does not work.
 
 | Agent | Global (all projects) | Per project |
 | --- | --- | --- |
@@ -50,40 +43,37 @@ Check your agent's documentation if a path does not work.
 | GitHub Copilot (VS Code, CLI) | `~/.copilot/skills/drawio` | `.github/skills/drawio` (also reads `.claude/skills/`) |
 | Gemini CLI | `~/.gemini/skills/drawio` | `.gemini/skills/drawio` |
 
-Example:
+To use it with several agents, clone once and symlink the clone into the others, so that
+one `git pull` updates them all:
 
 ```bash
-mkdir -p ~/.cursor/skills && ln -s "$SKILL" ~/.cursor/skills/drawio
-```
-
-To link it for several agents at once:
-
-```bash
-for dir in ~/.claude/skills ~/.agents/skills ~/.codex/skills ~/.cursor/skills; do
-  mkdir -p "$dir" && ln -sfn "$SKILL" "$dir/drawio"
+git clone <repo-url> ~/.claude/skills/drawio
+for dir in ~/.agents/skills ~/.codex/skills ~/.cursor/skills; do
+  mkdir -p "$dir" && ln -sfn ~/.claude/skills/drawio "$dir/drawio"
 done
 ```
 
 ### Agents without skill support
 
-Point the agent at the instructions from its rules file (`AGENTS.md`, `.cursorrules`,
-`CLAUDE.md`, ...):
+Clone it anywhere and point the agent at the instructions from its rules file
+(`AGENTS.md`, `.cursorrules`, `CLAUDE.md`, ...):
 
 ```markdown
 ## draw.io diagrams
-To create or edit .drawio files, read /absolute/path/to/drawio-skill/SKILL.md and follow it.
-The generator is /absolute/path/to/drawio-skill/scripts/drawio_gen.py.
+To create or edit .drawio files, read /absolute/path/to/drawio/SKILL.md and follow it.
+The generator is /absolute/path/to/drawio/scripts/drawio_gen.py.
 ```
 
 ### claude.ai / Claude Desktop
 
-Zip the folder (`cd drawio-skill && zip -r ../drawio.zip .`) and upload it under
-Settings > Capabilities > Skills. Shape search needs network access in that environment;
-everything else works offline.
+Zip the skill without the repository extras and upload it under Settings > Capabilities >
+Skills:
 
-### Remove
+```bash
+zip -r drawio.zip SKILL.md scripts references assets -x '*__pycache__*'
+```
 
-Delete the link (`rm ~/.claude/skills/drawio`). Deleting the link leaves this repository untouched.
+Shape search needs network access in that environment; everything else works offline.
 
 ## Use
 
@@ -94,10 +84,9 @@ Ask your agent, for example:
 - "AWS architecture with API Gateway, Lambda and DynamoDB, as a .drawio file."
 - "Put this diagram into our `template.drawio`, title 'Payments', author Ana."
 
-Or call the generator yourself:
+Or call the generator yourself, from the skill folder:
 
 ```bash
-cd drawio-skill
 python3 scripts/drawio_gen.py build    spec.json   -o out.drawio [--template assets/template-example.drawio]
 python3 scripts/drawio_gen.py mermaid  diagram.mmd -o out.drawio
 python3 scripts/drawio_gen.py shapes   aws lambda           # search draw.io's shape libraries
@@ -112,12 +101,12 @@ python3 scripts/drawio_gen.py export   out.drawio -f png    # needs draw.io desk
 
 | Path | Purpose |
 | --- | --- |
-| `drawio-skill/SKILL.md` | Instructions the agent follows. |
-| `drawio-skill/scripts/drawio_gen.py` | Generator CLI: JSON spec or Mermaid to `.drawio`, layout, templates, shape search, validation, export. |
-| `drawio-skill/references/spec.md`, `templates.md` | The JSON spec format and how templates are interpreted. |
-| `drawio-skill/references/upstream/` | Official draw.io XML, style and Mermaid references plus `mxfile.xsd`, vendored from [jgraph/drawio-mcp](https://github.com/jgraph/drawio-mcp) (`shared/`, Apache-2.0). |
-| `drawio-skill/assets/template-example.drawio` | Example template: locked frame with `{{title}}`/`{{author}}`/`{{date}}`, a `{{diagram}}` slot, and a style-sample page. |
-| `drawio-skill/data/` (git-ignored) | Cache of the official shape index (about 5 MB), downloaded on the first `shapes` search. |
+| `SKILL.md` | Instructions the agent follows. |
+| `scripts/drawio_gen.py` | Generator CLI: JSON spec or Mermaid to `.drawio`, layout, templates, shape search, validation, export. |
+| `references/spec.md`, `templates.md` | The JSON spec format and how templates are interpreted. |
+| `references/upstream/` | Official draw.io XML, style and Mermaid references plus `mxfile.xsd`, vendored from [jgraph/drawio-mcp](https://github.com/jgraph/drawio-mcp) (`shared/`, Apache-2.0). |
+| `assets/template-example.drawio` | Example template: locked frame with `{{title}}`/`{{author}}`/`{{date}}`, a `{{diagram}}` slot, and a style-sample page. |
+| `data/` (git-ignored) | Cache of the official shape index (about 5 MB), downloaded on the first `shapes` search. |
 | `examples/` | Sample output. |
 
 Mermaid support: the generator converts flowchart, sequence, class, ER and state diagrams
@@ -128,7 +117,7 @@ jgraph/drawio-mcp and uses its `search-index.json`, which upstream regenerates o
 draw.io release. To refresh the references and the index:
 
 ```bash
-python3 drawio-skill/scripts/drawio_gen.py update --shapes
+python3 scripts/drawio_gen.py update --shapes
 ```
 
 ## Optional: draw.io desktop
