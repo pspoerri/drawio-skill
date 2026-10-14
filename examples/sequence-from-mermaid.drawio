@@ -1,0 +1,81 @@
+<mxfile host="drawio-skill">
+  <diagram name="Page-1" id="page-1">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0" adaptiveColors="auto">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="frame" value="alt" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;width=50;height=22;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="40" y="270" width="610" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="frame_label" value="[valid credentials]" style="text;html=1;align=left;verticalAlign=middle;fontStyle=2;fontColor=#333333;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="98" y="271" width="139" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="frame_else" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#666666;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="40" y="385" as="sourcePoint" />
+            <mxPoint x="650" y="385" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="frame_label_2" value="[invalid]" style="text;html=1;align=left;verticalAlign=middle;fontStyle=2;fontColor=#333333;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="48" y="386" width="69" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="frame_2" value="loop" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;width=50;height=22;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="230" y="450" width="220" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="frame_label_3" value="[up to 3 times]" style="text;html=1;align=left;verticalAlign=middle;fontStyle=2;fontColor=#333333;" vertex="1" parent="1" connectable="0">
+          <mxGeometry x="288" y="451" width="111" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="p_U" value="User" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="60" y="40" width="100" height="720" as="geometry" />
+        </mxCell>
+        <mxCell id="p_W" value="Web App" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="260" y="40" width="100" height="720" as="geometry" />
+        </mxCell>
+        <mxCell id="p_A" value="Auth Service" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="500" y="40" width="120" height="720" as="geometry" />
+        </mxCell>
+        <mxCell id="p_D" value="DB" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;size=40;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="670" y="40" width="100" height="720" as="geometry" />
+        </mxCell>
+        <mxCell id="m_1" value="1. Open login page" style="html=1;verticalAlign=bottom;edgeStyle=none;rounded=0;labelBackgroundColor=none;endSize=6;startSize=6;endArrow=block;endFill=1;exitX=0.5;exitY=0.12500;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.12500;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="p_U" target="p_W">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_2" value="2. POST /login (user, password)" style="html=1;verticalAlign=bottom;edgeStyle=none;rounded=0;labelBackgroundColor=none;endSize=6;startSize=6;endArrow=block;endFill=1;exitX=0.5;exitY=0.18056;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.18056;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="p_W" target="p_A">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_3" value="3. SELECT user" style="html=1;verticalAlign=bottom;edgeStyle=none;rounded=0;labelBackgroundColor=none;endSize=6;startSize=6;endArrow=block;endFill=1;exitX=0.5;exitY=0.23611;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.23611;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="p_A" target="p_D">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_4" value="4. row" style="html=1;verticalAlign=bottom;edgeStyle=none;rounded=0;labelBackgroundColor=none;endSize=6;startSize=6;endArrow=open;dashed=1;exitX=0.5;exitY=0.29167;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.29167;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="p_D" target="p_A">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_5" value="5. 200 + JWT" style="html=1;verticalAlign=bottom;edgeStyle=none;rounded=0;labelBackgroundColor=none;endSize=6;startSize=6;endArrow=open;dashed=1;exitX=0.5;exitY=0.38889;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.38889;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="p_A" target="p_W">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_6" value="6. Redirect to dashboard" style="html=1;verticalAlign=bottom;edgeStyle=none;rounded=0;labelBackgroundColor=none;endSize=6;startSize=6;endArrow=open;dashed=1;exitX=0.5;exitY=0.44444;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.44444;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="p_W" target="p_U">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_7" value="7. 401" style="html=1;verticalAlign=bottom;edgeStyle=none;rounded=0;labelBackgroundColor=none;endSize=6;startSize=6;endArrow=open;dashed=1;exitX=0.5;exitY=0.54167;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.54167;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="p_A" target="p_W">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m_8" value="8. show error" style="html=1;verticalAlign=middle;edgeStyle=none;rounded=0;labelBackgroundColor=none;endSize=6;startSize=6;endArrow=block;endFill=1;align=left;spacingLeft=4;exitX=0.5;exitY=0.63889;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.66667;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="p_W" target="p_W">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="350" y="500" />
+              <mxPoint x="350" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m_9" value="9. async refresh" style="html=1;verticalAlign=bottom;edgeStyle=none;rounded=0;labelBackgroundColor=none;endSize=6;startSize=6;endArrow=open;exitX=0.5;exitY=0.91667;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.91667;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="p_W" target="p_A">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="note" value="Tokens expire after 15 min" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=14;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="280" y="565" width="310" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="note_2" value="audit log" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=14;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="740" y="625" width="100" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
